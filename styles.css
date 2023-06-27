@@ -1,0 +1,338 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+::-webkit-scrollbar {
+  width: 12px;
+  background-color: transparent;
+  position: fixed;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 0 8px 8px 0;
+  background-color: hsla(0, 0%, 100%, 0.3);
+}
+
+@font-face {
+  font-family: "CircularSp-Book";
+  src: url("https://encore.scdn.co/fonts/CircularSp-Book-4eaffdf96f4c6f984686e93d5d9cb325.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CircularSp-Bold";
+  src: url("https://encore.scdn.co/fonts/CircularSp-Bold-fe1cfc14b7498b187c78fa72fb72d148.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CircularSpTitle-Bold";
+  src: url("https://encore.scdn.co/fonts/CircularSpTitle-Bold-2fbf72b606d7f0b0f771ea4956a8b4d6.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CircularSpTitle-Black";
+  src: url("https://encore.scdn.co/fonts/CircularSpTitle-Black-3f9afb402080d53345ca1850226ca724.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "spoticon_regular_2";
+  src: url("https://open.spotifycdn.com/cdn/fonts/spoticon_regular_2.d728648c.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+body {
+  font-family: "CircularSp", "CircularSp-Book", "CircularSp-Bold",
+    "CircularSpTitle-Bold", "CircularSpTitle-Black", "spoticon_regular_2",
+    sans-serif;
+}
+/* GENERAL */
+.border-radius-8 {
+  border-radius: 8px;
+}
+.gap-8 {
+  gap: 8px;
+}
+.bg-main {
+  background-color: rgb(18, 18, 18);
+}
+.bg-card {
+  background-color: rgb(24, 24, 24);
+}
+.icono {
+  fill: rgb(179, 179, 179);
+}
+.icono-selected {
+  fill: white;
+}
+
+.seleccionable-fondo:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.seleccionable:hover * {
+  transition: all 0.1s ease-in-out;
+  cursor: pointer;
+  fill: white !important;
+  color: white !important;
+}
+
+/* CONTAINER */
+.content {
+  color: #b3b3b3;
+  width: 100%;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  letter-spacing: 0.3px;
+  padding: 8px;
+  background-color: black;
+  gap: 8px;
+}
+
+/* BOTTOM */
+.informacion {
+  width: 100%;
+  height: 66px;
+  /* padding: 11px 24px 7px 15px; */
+
+  background-image: linear-gradient(
+    90deg,
+    rgb(175, 40, 150),
+    rgb(80, 155, 245)
+  );
+}
+
+/* SIDEBAR */
+.sidebar {
+  min-width: 280px;
+  width: 280px;
+  height: 100%;
+}
+
+.sidebar-top {
+  height: 112px;
+  min-height: 112px;
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-top span {
+  font-size: 12px;
+  padding: 4px 12px;
+}
+
+.link-sidebar {
+  font-weight: 700;
+  min-height: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+}
+.link-sidebar-bot {
+  height: 56px;
+  min-height: 56px;
+  padding: 8px 16px;
+}
+.sidebar-bot {
+  padding: 0px 0 0 8px;
+}
+.boton-biblioteca {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: #a7a7a7;
+  font-size: 12px;
+  font-weight: 700;
+  flex: 1;
+}
+.boton-agregar {
+  border: none;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  height: 32px;
+  width: 32px;
+}
+
+/* MAIN */
+.main-box h2 {
+  font-weight: 700;
+  letter-spacing: normal;
+  font-size: 17px;
+  height: 40px;
+  color: white;
+}
+.biblioteca {
+  padding: 70px 24px 8px 24px;
+  width: 100%;
+  height: calc(100svh - 90px);
+  overflow-y: overlay;
+  /* background-image: linear-gradient(
+    rgba(179, 179, 179, 0.1),
+    rgb(18, 18, 18) 332px,
+    rgb(18, 18, 18) 332px 100%
+  ); */
+  background-color: rgb(83, 83, 83);
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0.57) 0px,
+    rgb(18, 18, 18) 332px
+  );
+  border-bottom-color: aliceblue;
+  background-attachment: local, scroll;
+}
+/* MAIN HEADER */
+.box-header {
+  position: absolute;
+  background-color: rgb(18, 18, 18);
+  height: 64px;
+  right: 0;
+  left: 0;
+  border-radius: 5px 5px 0 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
+.botones-nav {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+.boton-flecha {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.36);
+  border: none;
+}
+.links-nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+.botones-nav-der,
+.botones-nav-der-neg {
+  padding: 8px 32px;
+  height: 48px;
+  width: 137px;
+  margin-right: 8px;
+  border: none;
+  border-radius: 500px;
+  background-color: white;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-size: 12px;
+}
+.botones-nav-der-neg {
+  width: 101px;
+  text-align: left;
+  align-items: flex-start;
+  padding-left: 8px;
+  background-color: rgb(18, 18, 18);
+  color: #a7a7a7;
+  /* font-weight: normal; */
+  margin-right: 0;
+}
+/* MAIN CONTENT */
+
+/* GRID */
+#yutu_player {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+.songs-grid {
+  row-gap: 80px;
+}
+
+.cancion-card {
+  transition: all 0.3s ease-in-out;
+}
+.cancion-card:hover {
+  cursor: pointer;
+  /* background-image: linear-gradient(
+    rgba(130, 130, 130, 0.1) 0%,
+    rgb(179, 179, 179, 0.1) 50%
+    ); */
+  background-color: rgb(179, 179, 179, 0.1);
+}
+.cancion-card div {
+  padding: 16px;
+}
+.play-button {
+  border: none;
+  background-color: rgb(79, 209, 197);
+  border-radius: 50%;
+  fill: white;
+  width: 48px;
+  height: 48px;
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  bottom: 16px;
+  right: 24px;
+  transition: transform 0.2s;
+}
+.play-button:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+.play-btn-disabled:hover {
+  cursor: default;
+  transform: scale(1);
+}
+.play-btn-disabled {
+  background-color: rgb(179, 179, 179);
+  fill: white;
+  cursor: default;
+}
+.cancion-card:hover div .play-button {
+  visibility: visible;
+  transition: visibility 0s, opacity 0.2s linear, bottom 0.2s;
+  bottom: 24px;
+  opacity: 1;
+}
+.cancion-card:not(:hover) div .play-button {
+  visibility: hidden;
+  transition: visibility 1s, opacity 0.2s linear, bottom 0.2s;
+  opacity: 0;
+}
+
+.imagen-cancion {
+  border-radius: 8px;
+}
+.titulo-cancion {
+  font-size: 12px;
+  color: white;
+  font-weight: 700;
+}
+.nombre-autor {
+  font-size: 10.5px;
+  color: #a7a7a7;
+  font-weight: 400;
+}
