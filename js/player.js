@@ -36,20 +36,20 @@ const playSong = (url) => {
     document.querySelector(`path[url="${url}"]`).nextElementSibling.classList.remove('d-none')
     isPlaying = true
     currentSong = url
-    fetch(`https://www.youtube.com/embed/${id}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-        }
-    }).then(() => { }).catch((err) => {
-        playSong(url)
-        console.log(err)
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'No se pudo reproducir la canción (No existe o está protegida por derechos de autor)',
-        })
-    })
+    // fetch(`https://www.youtube.com/embed/${id}`, {
+    //     method: 'GET',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         'Access-Control-Allow-Origin': '*',
+    //     }
+    // }).then(() => { }).catch((err) => {
+    //     playSong(url)
+    //     console.log(err)
+    //     Swal.fire({
+    //         icon: 'error',
+    //         title: 'Oops...',
+    //         text: 'No se pudo reproducir la canción (No existe o está protegida por derechos de autor)',
+    //     })
+    // })
 
 }
