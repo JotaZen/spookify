@@ -1,7 +1,7 @@
-export const tarjeta = (cancion) => {
-    const onclick = cancion.url ? `onclick="playSong('${cancion.url}')" ` : "";
+export const tarjeta = (cancion, id) => {
+    const onclick = cancion.url ? `onclick="event.stopPropagation(); playSong('${cancion.url}')" ` : "";
     return `
-    <div class="card bg-card text-white h-100 cancion-card">
+    <div class="card bg-card text-white h-100 cancion-card" data-id="${id}">
         <div class="position-relative">
             <button class="play-button ${cancion.url ? "" : "play-btn-disabled"}" ${onclick}>
                 <svg role="img" height="24" width="24" aria-hidden="true" viewBox="0 0 24 24">
@@ -20,5 +20,4 @@ export const tarjeta = (cancion) => {
     </div>
     `
 }
-
 

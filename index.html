@@ -137,7 +137,11 @@
           <header class="position-relative w-100">
             <div class="box-header">
               <div class="botones-nav">
-                <button class="boton-flecha">
+                <button
+                  id="boton-flecha-volver"
+                  class="boton-flecha"
+                  onclick=""
+                >
                   <svg
                     role="img"
                     height="16"
@@ -174,16 +178,14 @@
           <div class="biblioteca border-radius-8">
             <!-- GRID -->
             <h2>Tu lista</h2>
-            <iframe
-              id="yutu_player"
-              width="560"
-              height="315"
-              src="https://www.youtube.com/embed/VIDEO_ID"
-              allow="autoplay"
-            ></iframe>
+
+            <!-- IF CLICK SONG HIDE -->
             <div class="songs-grid p-0">
               <!-- FILA -->
               <div class="row"></div>
+            </div>
+            <div class="perfil-cancion d-none">
+              <div>Cancion asdfasd</div>
             </div>
           </div>
 
@@ -192,13 +194,22 @@
       </div>
       <!-- INFO BOTTOM -->
       <div class="informacion flex-fill">
-        <p>Suscríbete</p>
+        <iframe
+          title="player"
+          id="yutu_player"
+          class="hidden smooth-hidden-out"
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/VIDEO_ID"
+          allow="autoplay"
+        ></iframe>
       </div>
     </main>
     <script src="./js/canciones.js" type="module"></script>
     <script src="./js/firestore.js" type="module"></script>
     <script src="./js/api.js" type="module"></script>
-    <script src="./js/app.js" type="module"></script>
     <script src="./js/player.js"></script>
+    <script src="./js/perfilCancion.js" type="module"></script>
+    <script src="./js/app.js" type="module"></script>
   </body>
 </html>
