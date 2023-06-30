@@ -69,7 +69,7 @@
         <div class="sidebar d-flex flex-column gap-8">
           <!-- TOP -->
           <nav class="bg-main sidebar-top">
-            <span class="link-sidebar seleccionable">
+            <span id="boton-inicio-sidebar" class="link-sidebar seleccionable">
               <svg
                 role="img"
                 height="24"
@@ -137,60 +137,86 @@
 
               <!-- FORMULARIO -->
               <div id="contenedor-formulario">
+                <div class="p-1"></div>
                 <!-- TITULO -->
-                <label class="form-label">Título</label>
-                <input
-                  autocomplete="off"
-                  type="text"
-                  class="form-control"
-                  placeholder="Título de la canción"
-                  name="nombre"
-                  required
-                />
+                <div class="form-floating">
+                  <input
+                    id="titulo-input-floating no-placeholder"
+                    autocomplete="off"
+                    type="text"
+                    class="form-control no-placeholder"
+                    placeholder="ph"
+                    name="nombre"
+                    required
+                  />
+                  <label class="form-label" for="titulo-input-floating"
+                    >Título</label
+                  >
+                </div>
                 <div class="p-1"></div>
                 <!-- AUTOR -->
-                <label class="form-label">Artista</label>
-                <input
-                  autocomplete="off"
-                  type="text"
-                  class="form-control"
-                  placeholder="Artista"
-                  name="autor"
-                />
+                <div class="form-floating">
+                  <input
+                    id="artista-input-floating"
+                    autocomplete="off"
+                    type="text"
+                    class="form-control no-placeholder"
+                    placeholder="Artista"
+                    name="autor"
+                    required
+                  />
+                  <label class="form-label" for="artista-input-floating"
+                    >Artista</label
+                  >
+                </div>
                 <div class="p-1"></div>
                 <!-- ALBUM -->
-                <label class="form-label">Albúm</label>
-                <input
-                  autocomplete="off"
-                  type="text"
-                  class="form-control"
-                  placeholder="Albúm"
-                  name="album"
-                />
+                <div class="form-floating">
+                  <input
+                    autocomplete="off"
+                    type="text"
+                    class="form-control no-placeholder"
+                    placeholder="Albúm"
+                    name="album"
+                  />
+                  <label class="form-label">Albúm</label>
+                </div>
                 <div class="p-1"></div>
-                <!-- URL -->
-                <label class="form-label">Enlace</label>
-                <input
-                  autocomplete="off"
-                  type="text"
-                  class="form-control vista-previa-setter"
-                  placeholder="Link de Youtube"
-                  name="url"
-                />
+                <!-- DURACION -->
+                <div class="form-floating">
+                  <input
+                    autocomplete="off"
+                    type="text"
+                    inputmode="numeric"
+                    pattern="\d*"
+                    class="form-control no-placeholder"
+                    placeholder="Duración"
+                    name="duracion"
+                  />
+                  <label class="form-label">Duración</label>
+                </div>
                 <div class="p-1"></div>
-                <!-- PORTADA -->
-                <label class="form-label">Portada</label>
-                <input
-                  autocomplete="off"
-                  type="text"
-                  class="form-control vista-previa-setter"
-                  placeholder="Link de la portada"
-                  name="portada"
-                />
+                <!-- FECHA -->
+                <div class="form-floating">
+                  <input
+                    id="fecha-input-floating"
+                    class="form-control no-placeholder"
+                    autocomplete="off"
+                    type="text"
+                    onfocus="(this.type='date')"
+                    onblur="if(!this.value)this.type='text'"
+                    placeholder="Fecha de lanzamiento"
+                    name="fecha"
+                  />
+                  <label class="form-label" for="fecha-input-floating">
+                    Fecha de lanzamiento
+                  </label>
+                </div>
+
                 <div class="p-1"></div>
                 <!-- FAVORITO -->
                 <div
-                  class="d-flex py-3 align-items-center justify-content-center"
+                  class="d-flex pt-2 align-items-center justify-content-center"
                 >
                   <label>
                     <input type="checkbox" name="favorito" value="1" />
@@ -212,30 +238,62 @@
                     </span>
                   </label>
                 </div>
-                <!-- VISTA PREVIA -->
-                <label class="form-label pb-2">Vista Previa</label>
-                <div class="d-flex flex-row justify-content-between">
-                  <img
-                    id="vista-previa-portada"
-                    src="./public/img/no-img.png"
-                    alt="portada"
-                    width="140"
-                    height="140"
-                    class="img-cover rounded d-none"
-                    onerror="this.src='./public/img/no-img.png';"
+                <hr />
+                <!-- URL -->
+                <div class="form-floating">
+                  <input
+                    autocomplete="off"
+                    type="text"
+                    class="form-control vista-previa-setter no-placeholder"
+                    placeholder="Link de Youtube"
+                    name="url"
                   />
-                  <iframe
-                    id="vista-previa-video"
-                    scrolling="no"
-                    class="rounded"
-                    title="vista-previa"
-                    width="140"
-                    height="140"
-                    src=""
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                  ></iframe>
+                  <label class="form-label">Link de Youtube</label>
+                </div>
+                <div class="p-1"></div>
+                <!-- PORTADA -->
+                <div class="form-floating">
+                  <input
+                    autocomplete="off"
+                    type="text"
+                    class="form-control vista-previa-setter no-placeholder"
+                    placeholder="Link de la portada"
+                    name="portada"
+                  />
+                  <label class="form-label">Link de la portada</label>
+                </div>
+                <div class="p-1"></div>
+                <!-- VISTA PREVIA -->
+
+                <label class="form-label pb-2 text-center">Vista Previa</label>
+                <div class="d-flex flex-row justify-content-between">
+                  <div class="text-center">
+                    <label class="form-label">Portada</label>
+                    <img
+                      id="vista-previa-portada"
+                      src="./public/img/no-img.png"
+                      alt="portada"
+                      width="140"
+                      height="140"
+                      class="img-cover rounded smooth-hidden-out"
+                      onerror="this.src='./public/img/no-img.png';"
+                    />
+                  </div>
+                  <div class="text-center">
+                    <label class="form-label">Video</label>
+                    <iframe
+                      id="vista-previa-video"
+                      scrolling="no"
+                      class="rounded smooth-hidden-out"
+                      title="vista-previa"
+                      width="140"
+                      height="140"
+                      src=""
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen
+                    ></iframe>
+                  </div>
                 </div>
                 <div class="p-5"></div>
               </div>
@@ -311,16 +369,14 @@
 
           <div class="biblioteca border-radius-8">
             <!-- GRID -->
-            <h2 id="titulo-grid">Lista de Canciones</h2>
+            <h2 id="titulo-grid" class="">Lista de Canciones</h2>
 
             <!-- IF CLICK SONG HIDE -->
             <div class="songs-grid p-0">
               <!-- FILA -->
               <div class="row"></div>
             </div>
-            <div class="perfil-cancion d-none">
-              <div>Cancion asdfasd</div>
-            </div>
+            <div class="perfil-cancion"></div>
           </div>
 
           <!-- FOOTER -->

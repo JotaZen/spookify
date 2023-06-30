@@ -1,5 +1,7 @@
-import { getDocs, collection, onSnapshot, addDoc, deleteDoc, doc, query, where, orderBy, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js"
+import { getDocs, getDoc, collection, onSnapshot, addDoc, deleteDoc, doc, query, where, orderBy, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js"
 import db from "./firestore.js";
+import { volverAInicio } from "./perfilCancion.js";
+import { validarData } from "./formulario.js";
 
 export const consultarDB = async (coleccion) => {
     const querySnapshot = await getDocs(collection(db, coleccion));
@@ -17,35 +19,222 @@ export const suscribirseABDD = async (callback, id, condicion) => {
 }
 // query(collection(db, 'canciones'), orderBy("fecha_ingreso"))
 export const agregarCancion = async (cancion) => {
+    if (!validarData(cancion)) {
+        Swal.fire({
+            icon: 'error',
+            color: 'white',
+            background: '#181818',
+            title: 'Error al agregar',
+            position: 'top-end',
+            toast: true,
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        return;
+    }
+
     try {
         await addDoc(collection(db, 'canciones'), cancion);
         Swal.fire({
             icon: 'success',
             color: 'white',
             background: '#181818',
-            title: 'Canción agregada',
+            title: `${cancion.nombre || "Sin Título"} agregado`,
+            position: 'top-end',
+            toast: true,
             showConfirmButton: false,
-            timer: 1500
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
         })
     } catch (e) {
-        console.error("Error adding document: ", e);
+        Swal.fire({
+            icon: 'error',
+            color: 'white',
+            background: '#181818',
+            title: 'Error al agregar ' + (cancion.nombre || "Sin Título"),
+            position: 'top-end',
+            toast: true,
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
     }
 }
 
-export const editarCancion = async (id, llave, valor) => {
+export const editarCancion = async (cancionEditada, id) => {
+    if (!validarData(cancionEditada)) {
+        Swal.fire({
+            icon: 'error',
+            color: 'white',
+            background: '#181818',
+            title: 'Error al editar',
+            position: 'top-end',
+            toast: true,
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        return
+    }
+
+    const cancionFormateada = {
+        nombre: cancionEditada.nombre || null,
+        autor: cancionEditada.autor || null,
+        album: cancionEditada.album || null,
+        duracion: parseInt(cancionEditada.duracion || 0) || null,
+        fecha: cancionEditada.fecha == "Sin fecha" ? null : cancionEditada.fecha,
+        fecha_ingreso: new Date().toISOString(),
+        portada: cancionEditada.portada || null,
+        url: cancionEditada.url || null,
+    }
+    console.log("Editando: ", cancionFormateada)
     const cancion = doc(db, "canciones", id);
-    await updateDoc(cancion, {
-        [llave]: valor
-    });
+    await updateDoc(cancion, cancionFormateada).then(() => {
+        Swal.fire({
+            icon: 'success',
+            color: 'white',
+            background: 'green',
+            title: 'Canción editada',
+            position: 'top-end',
+            toast: true,
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+    }).catch((error) => {
+        Swal.fire({
+            icon: 'error',
+            color: 'white',
+            background: '#181818',
+            title: 'Error al editar',
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            toast: true,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+    })
 
 }
 
-export const eliminarCancion = async (id) => {
-    deleteDoc(doc(db, "canciones", docuenena.id));
+export const eliminarCancion = async (id, documento) => {
+
+    if (documento.favorito) {
+        Swal.fire({
+            icon: 'error',
+            color: 'white',
+            background: '#181818',
+            title: 'No se puede eliminar una canción favorita',
+            position: 'top-end',
+            toast: true,
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        return
+    }
+    const cancionRef = doc(db, "canciones", id);
+    const cancion = await getDoc(cancionRef);
+    if (!cancion.exists()) {
+        Swal.fire({
+            icon: 'error',
+            color: 'white',
+            background: '#181818',
+            title: 'No existe la canción',
+            position: 'top-end',
+            toast: true,
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        return
+    }
+
+    await Swal.fire({
+        title: '¿Estás seguro?',
+        icon: 'warning',
+        color: 'white',
+        background: '#181818',
+        showCancelButton: true,
+        confirmButtonColor: 'teal',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Eliminar'
+    }).then((result) => {
+        if (!result.isConfirmed) {
+            return
+        }
+    })
+
+    deleteDoc(cancionRef).then(() => {
+        Swal.fire({
+            icon: 'success',
+            color: 'white',
+            background: 'green',
+            title: 'Canción eliminada',
+            showConfirmButton: false,
+            timer: 1500,
+            toast: true,
+            timerProgressBar: true,
+            position: 'top-end',
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        volverAInicio()
+    }).catch((error) => {
+        Swal.fire({
+            icon: 'error',
+            color: 'white',
+            background: '#181818',
+            title: 'Error al eliminar',
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+    })
 }
 
 export const editarFavorito = async (id, agregar = true) => {
-
     const cancion = doc(db, "canciones", id);
 
     await updateDoc(cancion, {

@@ -90,12 +90,12 @@ body {
 }
 .smooth-hidden-in {
   visibility: visible;
-  transition: visibility 0s, opacity 1s linear;
+  transition: visibility 0s, opacity 0.5s linear;
   opacity: 1;
 }
 .smooth-hidden-out {
   visibility: hidden;
-  transition: visibility 1s, opacity 1s linear;
+  transition: visibility 0.5s, opacity 0.5s linear;
   opacity: 0;
 }
 .seleccionable-fondo:hover {
@@ -123,6 +123,7 @@ body {
 
 /* BOTTOM */
 .informacion {
+  margin: 0;
   position: relative;
   width: 100%;
   height: 66px;
@@ -138,6 +139,7 @@ body {
   );
 }
 .informacion .info-titulo {
+  margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -146,6 +148,7 @@ body {
   padding: 0 24px;
   right: 0;
   left: 0;
+  font-weight: 700;
   animation: degradado-animado 20s ease-in-out infinite;
   background: linear-gradient(270deg, rgb(18, 18, 18), rgb(206, 206, 206));
   -webkit-background-clip: text;
@@ -226,23 +229,37 @@ body {
   border-radius: 50%;
   height: 32px;
   width: 32px;
+  background-color: rgba(255, 255, 255, 0.1);
   transition: all 0.2s;
+  fill: white;
+  color: white;
 }
-.boton-agregar:hover {
-  box-shadow: 0 0 1px #d3d3d360;
+.boton-agregar:not(:disabled):hover {
+  box-shadow: 0 0 3px #d3d3d360;
 }
 
 /* MAIN */
+
+.main-box {
+  /* background-image: linear-gradient(
+    #00000004 0px,
+    rgba(0, 0, 0, 0.575) 404px,
+    rgba(24, 39, 176, 0.616) 404px,
+    rgb(18, 18, 18) 606px 100%
+  );
+  background-color: rgb(24, 40, 176);
+  background-attachment: local, scroll; */
+}
 .main-box h2 {
   font-weight: 700;
   letter-spacing: normal;
   padding-top: 8px;
   font-size: 1.3rem;
   height: 40px;
-  color: white;
 }
-.biblioteca {
-  padding: 70px 24px 8px 24px;
+
+.biblioteca,
+.biblioteca-2 {
   width: 100%;
   height: calc(100svh - 90px);
   overflow-y: overlay;
@@ -251,14 +268,28 @@ body {
     rgb(18, 18, 18) 332px,
     rgb(18, 18, 18) 332px 100%
   ); */
+
+  border-bottom-color: aliceblue;
+  background-attachment: local, scroll;
+}
+.biblioteca {
+  padding: 70px 24px 8px 24px;
   background-color: rgb(83, 83, 83);
   background-image: linear-gradient(
     rgba(0, 0, 0, 0.57) 0px,
     rgb(18, 18, 18) 332px
   );
-  border-bottom-color: aliceblue;
-  background-attachment: local, scroll;
 }
+.biblioteca-2 {
+  background-image: linear-gradient(
+    #00000000 0px,
+    rgba(0, 0, 0, 0.5) 404px,
+    rgba(0, 0, 0, 0.6) 404px,
+    rgb(18, 18, 18) 606px 100%
+  );
+  background-color: rgb(24, 40, 176);
+}
+
 /* MAIN HEADER */
 .box-header {
   position: absolute;
@@ -288,6 +319,11 @@ body {
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.36);
   border: none;
+}
+.boton-flecha:hover:not(:disabled) * {
+  cursor: pointer;
+  color: white;
+  fill: white;
 }
 .links-nav {
   display: flex;
@@ -334,6 +370,7 @@ body {
 }
 
 .songs-grid {
+  padding: 70px 24px 8px 24px;
   row-gap: 80px;
 }
 
@@ -399,7 +436,7 @@ body {
   color: white;
 }
 .favorite-button-true {
-  color: rgb(211, 162, 39);
+  color: rgb(247, 189, 43);
 }
 
 #favorite-button:hover {
@@ -478,7 +515,8 @@ body {
   /* border: 1px solid #6d6d6d; */
 }
 
-#boton-limpiar {
+#boton-limpiar,
+#boton-editar-cancion {
   position: absolute;
   right: 0;
   left: 0;
@@ -493,7 +531,8 @@ body {
   justify-content: center;
 }
 
-#boton-limpiar-click {
+#boton-limpiar-click,
+#boton-editar-cancion-click {
   border: none;
   box-shadow: 0 0 2px lightgrey;
   padding: 12px 24px;
@@ -504,7 +543,8 @@ body {
   font-weight: 500;
 }
 
-#boton-limpiar button:hover {
+#boton-limpiar button:hover,
+#boton-editar-cancion button:hover {
   /* color: #202020; */
   box-shadow: 0 0 4px lightgrey;
   background-color: #202020;
@@ -521,5 +561,142 @@ input[type="checkbox"] {
   /* padding-left: 15px; */
 }
 input[type="checkbox"]:checked + .label {
-  color: rgb(211, 162, 39);
+  color: rgb(247, 189, 43);
+}
+
+.form-control.no-placeholder::placeholder {
+  visibility: hidden;
+}
+
+label::after {
+  background-color: transparent !important;
+}
+.form-floating > .form-control-plaintext ~ label,
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label,
+.form-floating > .form-select ~ label {
+  color: #6d6d6d;
+}
+#fecha-input-floating::-webkit-calendar-picker-indicator {
+  display: absolute;
+
+  color: rgba(0, 0, 0, 0);
+  opacity: 1;
+  display: block;
+  width: 30px;
+  height: 30px;
+  padding-bottom: 16px;
+  border-width: thin;
+  filter: invert(70%);
+}
+
+/* PERFIL CANCION */
+.perfil-cancion {
+  /* background-color: red; */
+  height: 100%;
+}
+#cancion-banner {
+  display: flex;
+  align-items: end;
+  padding: 24px;
+  height: 404px;
+  gap: 24px;
+}
+#cancion-banner img {
+  object-fit: cover;
+  border-radius: 1px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 60px 0px;
+}
+#banner-info {
+  display: flex;
+  justify-content: space-between;
+  height: 192px;
+}
+#banner-info h1 {
+  /* font-family: CircularSpTitle; */
+  font-size: 3.5rem;
+  color: white;
+  font-weight: 700;
+  margin: 0;
+}
+#banner-info p {
+  margin: 0;
+  font-size: 10.5px;
+  color: white;
+  font-weight: 700;
+}
+.play-button-perfil {
+  border: none;
+  background-color: rgb(79, 209, 197);
+  border-radius: 50%;
+  fill: white;
+  width: 64px;
+  height: 64px;
+  transition: all 0.2s;
+}
+.play-button-perfil:hover,
+#favorite-button-perfil:hover {
+  transform: scale(1.1);
+}
+#play-perfil {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  width: 100%;
+}
+#play-perfil div {
+  gap: 16px;
+}
+#play-perfil div:first-child {
+  gap: 32px;
+}
+#favorite-button-perfil {
+  border: none;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: all 0.2s;
+  background-color: transparent;
+}
+
+.favorite-button-false-perfil {
+  color: white;
+}
+.favorite-button-true-perfil {
+  color: rgb(247, 189, 43);
+}
+#eliminar-button-perfil {
+  background-color: transparent;
+  border: none;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  color: white;
+  justify-self: self-end;
+  transition: all 0.2s;
+  background-color: #181818;
+}
+#eliminar-button-perfil:hover {
+  background-color: rgb(197, 5, 5);
+}
+#dots-button-perfil {
+  border: none;
+  color: white;
+  fill: #a7a7a7;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  background-color: transparent;
+  transition: all 0.2s;
+}
+#dots-button-perfil:hover {
+  /* background-color: #18181850; */
+  transform: scale(1.1);
+  fill: white;
 }
