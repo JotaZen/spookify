@@ -20,12 +20,14 @@ export const suscribirseABDD = async (callback, id, condicion) => {
 // query(collection(db, 'canciones'), orderBy("fecha_ingreso"))
 export const agregarCancion = async (cancion) => {
     console.log(cancion)
-    if (!validarData(cancion)) {
+    const resultado = validarData(cancion)
+    if (!resultado.valid) {
         Swal.fire({
             icon: 'error',
             color: 'white',
             background: '#181818',
             title: 'Error al agregar',
+            text: resultado.errores.join("\n"),
             position: 'top-end',
             toast: true,
             showConfirmButton: false,
@@ -88,13 +90,15 @@ export const agregarCancion = async (cancion) => {
 }
 
 export const editarCancion = async (cancionEditada, id) => {
-
-    if (!validarData(cancionEditada)) {
+    const resultado = validarData(cancionEditada)
+    console.log(resultado)
+    if (!resultado.valid) {
         Swal.fire({
             icon: 'error',
             color: 'white',
             background: '#181818',
             title: 'Error al editar',
+            text: resultado.errores.join("\n"),
             position: 'top-end',
             toast: true,
             showConfirmButton: false,
@@ -109,8 +113,8 @@ export const editarCancion = async (cancionEditada, id) => {
     }
 
     const cancionFormateada = {
-        nombre: cancionEditada.nombre || null,
-        autor: cancionEditada.autor || null,
+        nombre: cancionEditada.nombre.trim() || null,
+        autor: cancionEditada.autor.trim() || null,
         album: cancionEditada.album || null,
         duracion: parseInt(cancionEditada.duracion || 0) || null,
         fecha: cancionEditada.fecha == "Sin fecha" ? null : cancionEditada.fecha,
@@ -130,7 +134,7 @@ export const editarCancion = async (cancionEditada, id) => {
             icon: 'success',
             color: 'white',
             background: 'green',
-            title: 'Canción editada',
+            title: "Canción: " + cancionFormateada.nombre + " editada",
             position: 'top-end',
             toast: true,
             showConfirmButton: false,
@@ -147,6 +151,7 @@ export const editarCancion = async (cancionEditada, id) => {
             color: 'white',
             background: '#181818',
             title: 'Error al editar',
+            text: resultado.errores.join("\n"),
             position: 'top-end',
             showConfirmButton: false,
             timer: 2200,

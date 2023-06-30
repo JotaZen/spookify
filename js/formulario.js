@@ -45,12 +45,28 @@ export const unsetVistaPrevia = () => {
 }
 
 export const validarData = (data) => {
-    if (!data.nombre || !data.autor) {
-        return false
+    // console.log(/^(http(s)??\:\/\/)?(www\.)?((youtube\.com\/watch\?v=)|(youtu.be\/))([a-zA-Z0-9\-_])+/.test(data.url))
+    const resultado = {
+        errores: [],
+        valid: true
     }
-    else if (data.duracion && parseInt(data.duracion) == NaN) {
-        return false
+    if (!data.nombre || !(data.nombre.trim())) {
+        resultado.errores.push("El nombre es obligatorio")
+        resultado.valid = false
     }
-    return true
+    if (!data.autor || !(data.autor.trim())) {
+        resultado.errores.push("El autor es obligatorio")
+        resultado.valid = false
+    }
+    if (data.duracion && (parseInt(data.duracion) == NaN || parseInt(data.duracion) < 0)) {
+        resultado.errores.push("La duración debe ser un número válido")
+        resultado.valid = false
+    }
+    if (data.url && !/^(http(s)??\:\/\/)?(www\.)?((youtube\.com\/watch\?v=)|(youtu.be\/))([a-zA-Z0-9\-_])+/.test(data.url)) {
+        resultado.errores.push("La Url del video no es válida")
+        resultado.valid = false
+    }
+
+    return resultado
 
 }

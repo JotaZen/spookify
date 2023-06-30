@@ -7,19 +7,19 @@ import { aparecer, desaparecer } from "./formulario.js"
 let mostrandoCancion = false
 
 const perfilCancion = (cancion, id) => {
-    let fecha = "Sin fecha"
-    let fecha_ingreso = cancion.fecha_ingreso ? cancion.fecha_ingreso?.split("T")[0] : ""
-    if (cancion.fecha) {
-        try {
-            fecha = cancion.fecha.toDate()
-            fecha = fecha.toISOString().split("T")[0]
-            fecha = fecha.split("-").reverse().join("-")
-        } catch (e) {
-            fecha = cancion.fecha
-        }
+  let fecha = "Sin fecha"
+  let fecha_ingreso = cancion.fecha_ingreso ? cancion.fecha_ingreso?.split("T")[0] : ""
+  if (cancion.fecha) {
+    try {
+      fecha = cancion.fecha.toDate()
+      fecha = fecha.toISOString().split("T")[0]
+      fecha = fecha.split("-").reverse().join("-")
+    } catch (e) {
+      fecha = cancion.fecha
     }
-    const onclick = cancion.url ? `onclick="event.stopPropagation(); playSong('${cancion.url}')" ` : "";
-    return `
+  }
+  const onclick = cancion.url ? `onclick="event.stopPropagation(); playSong('${cancion.url}')" ` : "";
+  return `
     <div class="h-100 w-100">
         <div id="cancion-banner" class="">
             <img width="192" height="192" src="${cancion.portada || "./public/img/no-img.png"}" alt="" class="">
@@ -78,6 +78,9 @@ const perfilCancion = (cancion, id) => {
                     placeholder="ph"
                     name="nombre"
                     required
+                    oninvalid="this.setCustomValidity('El nombre es obligatorio')"
+                    oninput="setCustomValidity('')"
+                    title="El nombre es obligatorio"
                     value="${cancion.nombre || ""}"
                   />
                   <label class="form-label" for="titulo-input-floating"
@@ -94,6 +97,10 @@ const perfilCancion = (cancion, id) => {
                     class="form-control no-placeholder"
                     placeholder="Artista"
                     name="autor"
+                    required
+                    oninvalid="this.setCustomValidity('El artista es obligatorio')"
+                    oninput="setCustomValidity('')"
+                    title="El artista es obligatorio"
                     value="${cancion.autor || ""}"
                   />
                   <label class="form-label" for="artista-input-floating"
@@ -139,7 +146,7 @@ const perfilCancion = (cancion, id) => {
                     onblur = "if(!this.value && ${fecha == "Sin fecha"})this.type='text'"
                     placeholder = "Fecha de lanzamiento"
                     name = "fecha"
-                    value = "${fecha}"
+                    value = "${fecha == "Sin fecha" ? "" : fecha}"
                         />
                         <label class="form-label" for="fecha-input-floating">
                             Fecha de lanzamiento
@@ -156,6 +163,8 @@ const perfilCancion = (cancion, id) => {
                     class="form-control vista-previa-setter no-placeholder"
                     placeholder="Link de Youtube"
                     name="url"
+                    oninvalid="this.setCustomValidity('Introduce una url válida')"
+                    oninput="setCustomValidity('')"
                     value="${cancion.url || ""}"
                   />
                   <label class="form-label">Link de Youtube</label>
@@ -202,88 +211,88 @@ const perfilCancion = (cancion, id) => {
 }
 
 export const mostrarCancion = async (idCancion) => {
-    if (mostrandoCancion) {
-        document.querySelector(".songs-grid").classList.remove("d-none")
-        document.querySelector(".perfil-cancion").classList.add("d-none")
-        mostrandoCancion = false
-        return
+  if (mostrandoCancion) {
+    document.querySelector(".songs-grid").classList.remove("d-none")
+    document.querySelector(".perfil-cancion").classList.add("d-none")
+    mostrandoCancion = false
+    return
+  }
+  mostrandoCancion = true
+  document.querySelector(".songs-grid").classList.add("d-none")
+  document.querySelector(".perfil-cancion").classList.remove("d-none")
+
+  const biblioRef = document.querySelector(".biblioteca")
+  biblioRef && biblioRef.classList.add("biblioteca-2")
+  biblioRef && biblioRef.classList.remove("biblioteca")
+
+
+  desaparecer(document.getElementById("boton-limpiar"))
+
+  document.getElementById("formulario-canciones").reset()
+  desaparecer(document.getElementById("contenedor-formulario"))
+  desaparecer(document.querySelector(".boton-agregar"))
+
+  document.querySelector(".perfil-cancion").innerHTML = ""
+  document.getElementById("titulo-grid").classList.add("d-none")
+  const cancionPerfil = await getDoc(doc(db, 'canciones', idCancion));
+  document.querySelector(".biblioteca-2").style.backgroundColor = cancionPerfil.data().color || `rgb( ${Math.floor(255 * Math.random())}, ${Math.floor(255 * Math.random())}, ${Math.floor(255 * Math.random())},${Math.floor(100 * Math.random())})`
+
+  document.querySelector(".perfil-cancion").innerHTML = perfilCancion(cancionPerfil.data(), cancionPerfil.id)
+
+  const botonFav = document.getElementById("favorite-button-perfil")
+
+  botonFav.addEventListener("click", async (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    const idCancion = e.currentTarget.dataset.id;
+    if (e.currentTarget.classList.contains("favorite-button-true-perfil")) {
+      e.currentTarget.classList.remove("favorite-button-true-perfil")
+      e.currentTarget.classList.add("favorite-button-false-perfil")
+      await editarFavorito(idCancion, false)
+    } else {
+      e.currentTarget.classList.remove("favorite-button-false-perfil")
+      e.currentTarget.classList.add("favorite-button-true-perfil")
+      await editarFavorito(idCancion, true)
     }
-    mostrandoCancion = true
-    document.querySelector(".songs-grid").classList.add("d-none")
-    document.querySelector(".perfil-cancion").classList.remove("d-none")
+  })
+  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
-    const biblioRef = document.querySelector(".biblioteca")
-    biblioRef && biblioRef.classList.add("biblioteca-2")
-    biblioRef && biblioRef.classList.remove("biblioteca")
+  document.getElementById("eliminar-button-perfil").addEventListener("click", async (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    eliminarCancion(idCancion)
+  })
 
-
-    desaparecer(document.getElementById("boton-limpiar"))
-
-    document.getElementById("formulario-canciones").reset()
-    desaparecer(document.getElementById("contenedor-formulario"))
-    desaparecer(document.querySelector(".boton-agregar"))
-
-    document.querySelector(".perfil-cancion").innerHTML = ""
-    document.getElementById("titulo-grid").classList.add("d-none")
-    const cancionPerfil = await getDoc(doc(db, 'canciones', idCancion));
-    document.querySelector(".biblioteca-2").style.backgroundColor = cancionPerfil.data().color || `rgb( ${Math.floor(255 * Math.random())}, ${Math.floor(255 * Math.random())}, ${Math.floor(255 * Math.random())},${Math.floor(100 * Math.random())})`
-
-    document.querySelector(".perfil-cancion").innerHTML = perfilCancion(cancionPerfil.data(), cancionPerfil.id)
-
-    const botonFav = document.getElementById("favorite-button-perfil")
-
-    botonFav.addEventListener("click", async (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        const idCancion = e.currentTarget.dataset.id;
-        if (e.currentTarget.classList.contains("favorite-button-true-perfil")) {
-            e.currentTarget.classList.remove("favorite-button-true-perfil")
-            e.currentTarget.classList.add("favorite-button-false-perfil")
-            await editarFavorito(idCancion, false)
-        } else {
-            e.currentTarget.classList.remove("favorite-button-false-perfil")
-            e.currentTarget.classList.add("favorite-button-true-perfil")
-            await editarFavorito(idCancion, true)
-        }
+  const formularioEditar = document.getElementById("editar-datos");
+  formularioEditar.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(formularioEditar));
+    const botonEditar = document.getElementById("boton-editar-cancion-click");
+    botonEditar.disabled = true;
+    botonEditar.innerText = "Editando..."
+    await editarCancion(data, idCancion).then(() => {
+      mostrandoCancion = false
+      mostrarCancion(idCancion)
     })
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    botonEditar.innerText = "Editar canción"
+    botonEditar.disabled = false;
 
-    document.getElementById("eliminar-button-perfil").addEventListener("click", async (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        eliminarCancion(idCancion)
-    })
-
-    const formularioEditar = document.getElementById("editar-datos");
-    formularioEditar.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const data = Object.fromEntries(new FormData(formularioEditar));
-        const botonEditar = document.getElementById("boton-editar-cancion-click");
-        botonEditar.disabled = true;
-        botonEditar.innerText = "Editando..."
-        await editarCancion(data, idCancion).then(() => {
-            mostrandoCancion = false
-            mostrarCancion(idCancion)
-        })
-        botonEditar.innerText = "Editar canción"
-        botonEditar.disabled = false;
-
-    })
+  })
 
 }
 
 export const volverAInicio = () => {
-    document.querySelector(".songs-grid").classList.remove("d-none")
-    document.querySelector(".perfil-cancion").classList.add("d-none")
-    document.getElementById("titulo-grid").classList.remove("d-none")
-    aparecer(document.getElementById("contenedor-formulario"))
-    aparecer(document.querySelector(".boton-agregar"))
-    aparecer(document.getElementById("boton-limpiar"))
-    const biblio2 = document.querySelector(".biblioteca-2")
-    biblio2.classList.add("biblioteca")
-    biblio2.classList.remove("biblioteca-2")
-    biblio2.style.backgroundColor = ""
+  document.querySelector(".songs-grid").classList.remove("d-none")
+  document.querySelector(".perfil-cancion").classList.add("d-none")
+  document.getElementById("titulo-grid").classList.remove("d-none")
+  aparecer(document.getElementById("contenedor-formulario"))
+  aparecer(document.querySelector(".boton-agregar"))
+  aparecer(document.getElementById("boton-limpiar"))
+  const biblio2 = document.querySelector(".biblioteca-2")
+  biblio2.classList.add("biblioteca")
+  biblio2.classList.remove("biblioteca-2")
+  biblio2.style.backgroundColor = ""
 
-    mostrandoCancion = false
+  mostrandoCancion = false
 }
