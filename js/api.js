@@ -142,26 +142,8 @@ export const editarCancion = async (cancionEditada, id) => {
 
 }
 
-export const eliminarCancion = async (id, documento) => {
+export const eliminarCancion = async (id) => {
 
-    if (documento.favorito) {
-        Swal.fire({
-            icon: 'error',
-            color: 'white',
-            background: '#181818',
-            title: 'No se puede eliminar una canción favorita',
-            position: 'top-end',
-            toast: true,
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-        })
-        return
-    }
     const cancionRef = doc(db, "canciones", id);
     const cancion = await getDoc(cancionRef);
     if (!cancion.exists()) {
@@ -181,8 +163,24 @@ export const eliminarCancion = async (id, documento) => {
             }
         })
         return
+    } else if (cancion.data().favorito) {
+        Swal.fire({
+            icon: 'error',
+            color: 'white',
+            background: '#181818',
+            title: 'No se puede eliminar una canción favorita',
+            position: 'top-end',
+            toast: true,
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        return
     }
-
     await Swal.fire({
         title: '¿Estás seguro?',
         icon: 'warning',
@@ -191,47 +189,48 @@ export const eliminarCancion = async (id, documento) => {
         showCancelButton: true,
         confirmButtonColor: 'teal',
         cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
         confirmButtonText: 'Eliminar'
     }).then((result) => {
-        if (!result.isConfirmed) {
-            return
+        if (result.isConfirmed) {
+            deleteDoc(cancionRef).then(() => {
+                Swal.fire({
+                    icon: 'success',
+                    color: 'white',
+                    background: 'green',
+                    title: 'Canción eliminada',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    toast: true,
+                    timerProgressBar: true,
+                    position: 'top-end',
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+                volverAInicio()
+            }).catch((error) => {
+                Swal.fire({
+                    icon: 'error',
+                    color: 'white',
+                    background: '#181818',
+                    title: 'Error al eliminar',
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+            })
         }
     })
 
-    deleteDoc(cancionRef).then(() => {
-        Swal.fire({
-            icon: 'success',
-            color: 'white',
-            background: 'green',
-            title: 'Canción eliminada',
-            showConfirmButton: false,
-            timer: 1500,
-            toast: true,
-            timerProgressBar: true,
-            position: 'top-end',
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-        })
-        volverAInicio()
-    }).catch((error) => {
-        Swal.fire({
-            icon: 'error',
-            color: 'white',
-            background: '#181818',
-            title: 'Error al eliminar',
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-        })
-    })
+
 }
 
 export const editarFavorito = async (id, agregar = true) => {

@@ -202,6 +202,8 @@ export const mostrarCancion = async (idCancion) => {
     biblioRef && biblioRef.classList.add("biblioteca-2")
     biblioRef && biblioRef.classList.remove("biblioteca")
 
+    desaparecer(document.getElementById("boton-limpiar"))
+
     document.getElementById("formulario-canciones").reset()
     desaparecer(document.getElementById("contenedor-formulario"))
     desaparecer(document.querySelector(".boton-agregar"))
@@ -234,7 +236,7 @@ export const mostrarCancion = async (idCancion) => {
     document.getElementById("eliminar-button-perfil").addEventListener("click", async (e) => {
         e.stopPropagation();
         e.preventDefault();
-        eliminarCancion(idCancion, cancionPerfil.data())
+        eliminarCancion(idCancion)
     })
 
     const formularioEditar = document.getElementById("editar-datos");
@@ -261,6 +263,7 @@ export const volverAInicio = () => {
     document.getElementById("titulo-grid").classList.remove("d-none")
     aparecer(document.getElementById("contenedor-formulario"))
     aparecer(document.querySelector(".boton-agregar"))
+    aparecer(document.getElementById("boton-limpiar"))
     document.querySelector(".biblioteca-2")?.classList.add("biblioteca")
     document.querySelector(".biblioteca-2")?.classList.remove("biblioteca-2")
 
