@@ -19,6 +19,7 @@ export const suscribirseABDD = async (callback, id, condicion) => {
 }
 // query(collection(db, 'canciones'), orderBy("fecha_ingreso"))
 export const agregarCancion = async (cancion) => {
+    console.log(cancion)
     if (!validarData(cancion)) {
         Swal.fire({
             icon: 'error',
@@ -37,14 +38,26 @@ export const agregarCancion = async (cancion) => {
         })
         return;
     }
+    const cancionFormateada = {
+        nombre: cancion.nombre || null,
+        autor: cancion.autor || null,
+        album: cancion.album || null,
+        duracion: parseInt(cancion.duracion || 0) || null,
+        fecha: (cancion.fecha == "Sin fecha" || !cancion.fecha) ? null : cancion.fecha,
+        fecha_ingreso: new Date().toISOString(),
+        portada: cancion.portada || null,
+        color: cancion.color == "#000000" ? null : cancion.color,
+        url: cancion.url || null,
+    }
 
     try {
-        await addDoc(collection(db, 'canciones'), cancion);
+
+        await addDoc(collection(db, 'canciones'), cancionFormateada);
         Swal.fire({
             icon: 'success',
             color: 'white',
             background: '#181818',
-            title: `${cancion.nombre || "Sin Título"} agregado`,
+            title: `${cancionFormateada.nombre || "Sin Título"} agregado`,
             position: 'top-end',
             toast: true,
             showConfirmButton: false,
@@ -75,6 +88,7 @@ export const agregarCancion = async (cancion) => {
 }
 
 export const editarCancion = async (cancionEditada, id) => {
+
     if (!validarData(cancionEditada)) {
         Swal.fire({
             icon: 'error',
@@ -100,10 +114,15 @@ export const editarCancion = async (cancionEditada, id) => {
         album: cancionEditada.album || null,
         duracion: parseInt(cancionEditada.duracion || 0) || null,
         fecha: cancionEditada.fecha == "Sin fecha" ? null : cancionEditada.fecha,
-        fecha_ingreso: new Date().toISOString(),
+        // fecha_ingreso: cancionEditada.fecha_ingreso || new Date().toISOString(),
         portada: cancionEditada.portada || null,
+        color: cancionEditada.color == "#000000" ? null : cancionEditada.color,
         url: cancionEditada.url || null,
     }
+    if (!cancionFormateada.fecha_ingreso) {
+        Object.assign(cancionFormateada, { fecha_ingreso: new Date().toISOString() })
+    }
+
     console.log("Editando: ", cancionFormateada)
     const cancion = doc(db, "canciones", id);
     await updateDoc(cancion, cancionFormateada).then(() => {

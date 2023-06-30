@@ -190,10 +190,11 @@
                     inputmode="numeric"
                     pattern="\d*"
                     class="form-control no-placeholder"
+                    title="Solo números"
                     placeholder="Duración"
                     name="duracion"
                   />
-                  <label class="form-label">Duración</label>
+                  <label class="form-label">Duración en segundos</label>
                 </div>
                 <div class="p-1"></div>
                 <!-- FECHA -->
@@ -220,7 +221,9 @@
                 >
                   <label>
                     <input type="checkbox" name="favorito" value="1" />
-                    <span class="label d-flex flex-row gap-8">
+                    <span
+                      class="label d-flex flex-row align-items-center gap-8"
+                    >
                       <p class="m-0">Añadir a favoritos</p>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -242,10 +245,12 @@
                 <!-- URL -->
                 <div class="form-floating">
                   <input
+                    title="El link debe ser de Youtube"
                     autocomplete="off"
                     type="text"
                     class="form-control vista-previa-setter no-placeholder"
                     placeholder="Link de Youtube"
+                    pattern="^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$"
                     name="url"
                   />
                   <label class="form-label">Link de Youtube</label>
@@ -263,6 +268,18 @@
                   <label class="form-label">Link de la portada</label>
                 </div>
                 <div class="p-1"></div>
+                <!-- COLOR -->
+                <div class="form-floating w-100 mb-4">
+                  <input
+                    autocomplete="off"
+                    type="color"
+                    inputmode="numeric"
+                    class="form-control no-placeholder form-control-color w-100"
+                    placeholder="Color"
+                    name="color"
+                  />
+                  <label class="form-label">Fondo del perfil</label>
+                </div>
                 <!-- VISTA PREVIA -->
 
                 <label class="form-label pb-2 text-center">Vista Previa</label>
@@ -295,6 +312,7 @@
                     ></iframe>
                   </div>
                 </div>
+
                 <div class="p-5"></div>
               </div>
             </form>
@@ -369,7 +387,24 @@
 
           <div class="biblioteca border-radius-8">
             <!-- GRID -->
-            <h2 id="titulo-grid" class="">Lista de Canciones</h2>
+            <h2
+              id="titulo-grid"
+              class="d-flex flex-row align-items-center justify-content-between mb-4"
+            >
+              <span>Lista de Canciones</span>
+              <span>
+                <select
+                  id="select-ordenar"
+                  class="select-ordenar form-select bg-main text-white border-0 rounded-8"
+                  name="select-ordenar"
+                >
+                  <option value="1">A-Z</option>
+                  <option value="2">Z-A</option>
+                  <option value="3" selected>Recientes</option>
+                  <option value="4">Antiguas</option>
+                </select>
+              </span>
+            </h2>
 
             <!-- IF CLICK SONG HIDE -->
             <div class="songs-grid p-0">

@@ -23,7 +23,7 @@ const playSong = (url) => {
     document.getElementById("yutu_player").classList.remove('smooth-hidden-out')
     document.getElementById("yutu_player").classList.add('smooth-hidden-in')
 
-    const id = url.split("v=")[1]
+    const id = url.split("v=")[1].split("&")[0]
     console.log(`Reproduciendo: ${url}`)
     document.getElementById('yutu_player').src = `https://www.youtube.com/embed/${id}?autoplay=1`
 

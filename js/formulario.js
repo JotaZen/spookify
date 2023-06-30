@@ -19,7 +19,7 @@ export const setVistaPrevia = () => {
     const divPortada = document.getElementById("vista-previa-portada")
 
     if (url) {
-        const id = url.split("v=")[1]
+        const id = url.split("v=")[1].split("&")[0]
         divVideo.src = `https://www.youtube.com/embed/${id}`
         aparecer(divVideo)
     } else {

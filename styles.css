@@ -12,7 +12,10 @@
   border-radius: 0 8px 8px 0;
   background-color: hsla(0, 0%, 100%, 0.3);
 }
-
+::selection {
+  color: white;
+  background: #00000099;
+}
 @font-face {
   font-family: "CircularSp-Book";
   src: url("https://encore.scdn.co/fonts/CircularSp-Book-4eaffdf96f4c6f984686e93d5d9cb325.woff2")
@@ -90,12 +93,12 @@ body {
 }
 .smooth-hidden-in {
   visibility: visible;
-  transition: visibility 0s, opacity 0.5s linear;
+  transition: visibility 0s, opacity 0.3s linear;
   opacity: 1;
 }
 .smooth-hidden-out {
   visibility: hidden;
-  transition: visibility 0.5s, opacity 0.5s linear;
+  transition: visibility 0.5s, opacity 0.3s linear;
   opacity: 0;
 }
 .seleccionable-fondo:hover {
@@ -248,7 +251,8 @@ body {
     rgb(18, 18, 18) 606px 100%
   );
   background-color: rgb(24, 40, 176);
-  background-attachment: local, scroll; */
+  */
+  background-attachment: local, scroll;
 }
 .main-box h2 {
   font-weight: 700;
@@ -271,6 +275,7 @@ body {
 
   border-bottom-color: aliceblue;
   background-attachment: local, scroll;
+  background-color: rgba(0, 0, 0, 0.36);
 }
 .biblioteca {
   padding: 70px 24px 8px 24px;
@@ -287,7 +292,8 @@ body {
     rgba(0, 0, 0, 0.6) 404px,
     rgb(18, 18, 18) 606px 100%
   );
-  background-color: rgb(24, 40, 176);
+  /* background-color: rgb(24, 40, 176); */
+  transition: all 0.2s;
 }
 
 /* MAIN HEADER */
@@ -298,7 +304,7 @@ body {
   right: 0;
   left: 0;
   border-radius: 5px 5px 0 0;
-  z-index: 2;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -464,6 +470,8 @@ body {
 
 .imagen-cancion {
   border-radius: 8px;
+  object-fit: cover !important;
+  aspect-ratio: 1 / 1;
 }
 .titulo-cancion {
   font-size: 0.8rem;
@@ -508,7 +516,8 @@ body {
 #contenedor-formulario input::placeholder {
   color: #6d6d6d;
 }
-#contenedor-formulario input:focus {
+#contenedor-formulario input:focus,
+#select-ordenar:focus {
   color: white;
   outline: none;
   box-shadow: 0px 0px 3px #6d6d6d;
@@ -520,8 +529,7 @@ body {
   position: absolute;
   right: 0;
   left: 0;
-  bottom: 16px;
-
+  margin-top: 16px;
   border: none;
   border-radius: 500px;
   background-color: transparent;

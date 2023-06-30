@@ -8,6 +8,7 @@ let mostrandoCancion = false
 
 const perfilCancion = (cancion, id) => {
     let fecha = "Sin fecha"
+    let fecha_ingreso = cancion.fecha_ingreso ? cancion.fecha_ingreso?.split("T")[0] : ""
     if (cancion.fecha) {
         try {
             fecha = cancion.fecha.toDate()
@@ -23,10 +24,10 @@ const perfilCancion = (cancion, id) => {
         <div id="cancion-banner" class="">
             <img width="192" height="192" src="${cancion.portada || "./public/img/no-img.png"}" alt="" class="">
             <div id="banner-info" class="d-flex flex-column align-content-center">
-                <p class="mt-3">Canción</p>
+                <p class="mt-3">Canción ${fecha_ingreso ? '<i> - Agregada el ' + fecha_ingreso.split("-").reverse().join("-") + " a las " + cancion.fecha_ingreso?.split("T")[1].split(".")[0] + '</i>' : ""}</p>
                 <h1 class="text-white">${cancion.nombre}</h1>
                 <p class="mb-3">
-                ${cancion.autor}${cancion.album ? " • <i>" + cancion.album + "</i>" : ""}${" • " + fecha}${cancion.duracion ? " • " + (Math.floor(cancion.duracion / 60)) : ""}${cancion.duracion ? ":" + (cancion.duracion % 60) : ""}
+                ${cancion.autor}${cancion.album ? " • <i>" + cancion.album + "</i>" : ""}${" • " + fecha.split("-").reverse().join("-")}${cancion.duracion ? " • " + (Math.floor(cancion.duracion / 60)) : ""}${cancion.duracion ? ":" + (cancion.duracion % 60) : ""}
                 </p >
             </div >
         </div>
@@ -173,15 +174,28 @@ const perfilCancion = (cancion, id) => {
                   <label class="form-label">Link de la portada</label>
                 </div>
                 <div class="p-1"></div>
-            </div >
-            <div class="position-relative">
-                <div id="boton-editar-cancion">
-                    <button id="boton-editar-cancion-click" type="submit">
-                    Editar canción
-                    </button>
+                <!-- COLOR -->
+                <div class="form-floating w-100">
+                  <input
+                    autocomplete="off"
+                    type="color"
+                    inputmode="numeric"
+                    class="form-control no-placeholder form-control-color w-100"
+                    placeholder="Color"
+                    name="color"
+                    value="${cancion.color || ""}"
+                  />
+                  <label class="form-label">Fondo</label>
                 </div>
-            </div>
-            <div class="p-5"></div>
+                <div class="p-1"></div>
+                <div class="position-relative">
+                    <div id="boton-editar-cancion">
+                        <button id="boton-editar-cancion-click" type="submit">
+                        Editar canción
+                        </button>
+                    </div>
+                </div>
+            </div >
             </form >
         </div >
     `
@@ -202,6 +216,7 @@ export const mostrarCancion = async (idCancion) => {
     biblioRef && biblioRef.classList.add("biblioteca-2")
     biblioRef && biblioRef.classList.remove("biblioteca")
 
+
     desaparecer(document.getElementById("boton-limpiar"))
 
     document.getElementById("formulario-canciones").reset()
@@ -211,6 +226,7 @@ export const mostrarCancion = async (idCancion) => {
     document.querySelector(".perfil-cancion").innerHTML = ""
     document.getElementById("titulo-grid").classList.add("d-none")
     const cancionPerfil = await getDoc(doc(db, 'canciones', idCancion));
+    document.querySelector(".biblioteca-2").style.backgroundColor = cancionPerfil.data().color || `rgb( ${Math.floor(255 * Math.random())}, ${Math.floor(255 * Math.random())}, ${Math.floor(255 * Math.random())},${Math.floor(100 * Math.random())})`
 
     document.querySelector(".perfil-cancion").innerHTML = perfilCancion(cancionPerfil.data(), cancionPerfil.id)
 
@@ -264,8 +280,10 @@ export const volverAInicio = () => {
     aparecer(document.getElementById("contenedor-formulario"))
     aparecer(document.querySelector(".boton-agregar"))
     aparecer(document.getElementById("boton-limpiar"))
-    document.querySelector(".biblioteca-2")?.classList.add("biblioteca")
-    document.querySelector(".biblioteca-2")?.classList.remove("biblioteca-2")
+    const biblio2 = document.querySelector(".biblioteca-2")
+    biblio2.classList.add("biblioteca")
+    biblio2.classList.remove("biblioteca-2")
+    biblio2.style.backgroundColor = ""
 
     mostrandoCancion = false
 }
