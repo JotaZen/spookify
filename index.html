@@ -100,36 +100,153 @@
           </nav>
           <!-- BOTTOM -->
           <div class="bg-main border-radius-8 h-100 sidebar-bot">
-            <span class="link-sidebar link-sidebar-bot">
-              <button class="boton-biblioteca seleccionable">
-                <svg
-                  role="img"
-                  height="24"
-                  width="24"
-                  viewBox="0 0 24 24"
-                  class="icono"
+            <form id="formulario-canciones">
+              <span class="link-sidebar link-sidebar-bot">
+                <div class="boton-biblioteca">
+                  <svg
+                    role="img"
+                    height="24"
+                    width="24"
+                    viewBox="0 0 24 24"
+                    class="icono"
+                  >
+                    <path
+                      d="M3 22a1 1 0 0 1-1-1V3a1 1 0 0 1 2 0v18a1 1 0 0 1-1 1zM15.5 2.134A1 1 0 0 0 14 3v18a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V6.464a1 1 0 0 0-.5-.866l-6-3.464zM9 2a1 1 0 0 0-1 1v18a1 1 0 1 0 2 0V3a1 1 0 0 0-1-1z"
+                    ></path>
+                  </svg>
+                  <span>Agregar a tu biblioteca</span>
+                </div>
+                <button
+                  type="submit"
+                  class="boton-agregar seleccionable-fondo seleccionable"
                 >
-                  <path
-                    d="M3 22a1 1 0 0 1-1-1V3a1 1 0 0 1 2 0v18a1 1 0 0 1-1 1zM15.5 2.134A1 1 0 0 0 14 3v18a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V6.464a1 1 0 0 0-.5-.866l-6-3.464zM9 2a1 1 0 0 0-1 1v18a1 1 0 1 0 2 0V3a1 1 0 0 0-1-1z"
-                  ></path>
-                </svg>
-                <span>Tu biblioteca</span>
-              </button>
-              <button class="boton-agregar seleccionable-fondo seleccionable">
-                <svg
-                  role="img"
-                  height="16"
-                  width="16"
-                  aria-hidden="true"
-                  viewBox="0 0 16 16"
-                  class="icono"
+                  <svg
+                    role="img"
+                    height="16"
+                    width="16"
+                    aria-hidden="true"
+                    viewBox="0 0 16 16"
+                    class="icono"
+                  >
+                    <path
+                      d="M15.25 8a.75.75 0 0 1-.75.75H8.75v5.75a.75.75 0 0 1-1.5 0V8.75H1.5a.75.75 0 0 1 0-1.5h5.75V1.5a.75.75 0 0 1 1.5 0v5.75h5.75a.75.75 0 0 1 .75.75z"
+                    ></path>
+                  </svg>
+                </button>
+              </span>
+
+              <!-- FORMULARIO -->
+              <div id="contenedor-formulario">
+                <!-- TITULO -->
+                <label class="form-label">Título</label>
+                <input
+                  autocomplete="off"
+                  type="text"
+                  class="form-control"
+                  placeholder="Título de la canción"
+                  name="nombre"
+                  required
+                />
+                <div class="p-1"></div>
+                <!-- AUTOR -->
+                <label class="form-label">Artista</label>
+                <input
+                  autocomplete="off"
+                  type="text"
+                  class="form-control"
+                  placeholder="Artista"
+                  name="autor"
+                />
+                <div class="p-1"></div>
+                <!-- ALBUM -->
+                <label class="form-label">Albúm</label>
+                <input
+                  autocomplete="off"
+                  type="text"
+                  class="form-control"
+                  placeholder="Albúm"
+                  name="album"
+                />
+                <div class="p-1"></div>
+                <!-- URL -->
+                <label class="form-label">Enlace</label>
+                <input
+                  autocomplete="off"
+                  type="text"
+                  class="form-control vista-previa-setter"
+                  placeholder="Link de Youtube"
+                  name="url"
+                />
+                <div class="p-1"></div>
+                <!-- PORTADA -->
+                <label class="form-label">Portada</label>
+                <input
+                  autocomplete="off"
+                  type="text"
+                  class="form-control vista-previa-setter"
+                  placeholder="Link de la portada"
+                  name="portada"
+                />
+                <div class="p-1"></div>
+                <!-- FAVORITO -->
+                <div
+                  class="d-flex py-3 align-items-center justify-content-center"
                 >
-                  <path
-                    d="M15.25 8a.75.75 0 0 1-.75.75H8.75v5.75a.75.75 0 0 1-1.5 0V8.75H1.5a.75.75 0 0 1 0-1.5h5.75V1.5a.75.75 0 0 1 1.5 0v5.75h5.75a.75.75 0 0 1 .75.75z"
-                  ></path>
-                </svg>
-              </button>
-            </span>
+                  <label>
+                    <input type="checkbox" name="favorito" value="1" />
+                    <span class="label d-flex flex-row gap-8">
+                      <p class="m-0">Añadir a favoritos</p>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="28"
+                        height="28"
+                        fill="currentColor"
+                        class="favorite-button-star"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M7.22303 0.665992C7.32551 0.419604 7.67454 0.419604 7.77702 0.665992L9.41343 4.60039C9.45663 4.70426 9.55432 4.77523 9.66645 4.78422L13.914 5.12475C14.18 5.14607 14.2878 5.47802 14.0852 5.65162L10.849 8.42374C10.7636 8.49692 10.7263 8.61176 10.7524 8.72118L11.7411 12.866C11.803 13.1256 11.5206 13.3308 11.2929 13.1917L7.6564 10.9705C7.5604 10.9119 7.43965 10.9119 7.34365 10.9705L3.70718 13.1917C3.47945 13.3308 3.19708 13.1256 3.25899 12.866L4.24769 8.72118C4.2738 8.61176 4.23648 8.49692 4.15105 8.42374L0.914889 5.65162C0.712228 5.47802 0.820086 5.14607 1.08608 5.12475L5.3336 4.78422C5.44573 4.77523 5.54342 4.70426 5.58662 4.60039L7.22303 0.665992Z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </span>
+                  </label>
+                </div>
+                <!-- VISTA PREVIA -->
+                <label class="form-label pb-2">Vista Previa</label>
+                <div class="d-flex flex-row justify-content-between">
+                  <img
+                    id="vista-previa-portada"
+                    src="./public/img/no-img.png"
+                    alt="portada"
+                    width="140"
+                    height="140"
+                    class="img-cover rounded d-none"
+                    onerror="this.src='./public/img/no-img.png';"
+                  />
+                  <iframe
+                    id="vista-previa-video"
+                    scrolling="no"
+                    class="rounded"
+                    title="vista-previa"
+                    width="140"
+                    height="140"
+                    src=""
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <div class="p-5"></div>
+              </div>
+            </form>
+            <div class="position-relative">
+              <div id="boton-limpiar">
+                <button id="boton-limpiar-click" type="button">
+                  Vaciar Campos
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         <!-- MAIN BOX -->
@@ -140,7 +257,7 @@
                 <button
                   id="boton-flecha-volver"
                   class="boton-flecha"
-                  onclick=""
+                  type="button"
                 >
                   <svg
                     role="img"
@@ -154,7 +271,7 @@
                     ></path>
                   </svg>
                 </button>
-                <button class="boton-flecha">
+                <button class="boton-flecha" type="button" disabled>
                   <svg
                     role="img"
                     height="16"
@@ -169,15 +286,32 @@
                 </button>
               </div>
               <div class="links-nav">
-                <button class="botones-nav-der-neg">Registrarte</button>
-                <button class="botones-nav-der">Iniciar sesión</button>
+                <p class="botones-nav-der-neg">Jordy Zenteno</p>
+                <a
+                  href="https://github.com/JotaZen"
+                  class="text-decoration-none"
+                >
+                  <button class="botones-nav-der" type="button">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                      />
+                    </svg>
+                    Github
+                  </button>
+                </a>
               </div>
             </div>
           </header>
 
           <div class="biblioteca border-radius-8">
             <!-- GRID -->
-            <h2>Tu lista</h2>
+            <h2 id="titulo-grid">Lista de Canciones</h2>
 
             <!-- IF CLICK SONG HIDE -->
             <div class="songs-grid p-0">
@@ -194,14 +328,13 @@
       </div>
       <!-- INFO BOTTOM -->
       <div class="informacion flex-fill">
+        <h2 class="info-titulo">Reproduce una canción</h2>
         <iframe
           title="player"
           id="yutu_player"
-          class="hidden smooth-hidden-out"
-          width="560"
-          height="315"
+          class="smooth-hidden-out"
           src="https://www.youtube.com/embed/VIDEO_ID"
-          allow="autoplay"
+          allow="autoplay; fullscreen;"
         ></iframe>
       </div>
     </main>
@@ -210,6 +343,7 @@
     <script src="./js/api.js" type="module"></script>
     <script src="./js/player.js"></script>
     <script src="./js/perfilCancion.js" type="module"></script>
+    <script src="./js/formulario.js" type="module"></script>
     <script src="./js/app.js" type="module"></script>
   </body>
 </html>

@@ -61,6 +61,12 @@ body {
 .border-radius-8 {
   border-radius: 8px;
 }
+.img-contain {
+  object-fit: contain;
+}
+.img-cover {
+  object-fit: cover;
+}
 .gap-8 {
   gap: 8px;
 }
@@ -79,12 +85,15 @@ body {
 .hidden {
   visibility: hidden;
 }
-.smoth-hidden-in{
+.rotate-45 {
+  transform: rotate(45deg);
+}
+.smooth-hidden-in {
   visibility: visible;
   transition: visibility 0s, opacity 1s linear;
   opacity: 1;
 }
-.smoth-hidden-out{
+.smooth-hidden-out {
   visibility: hidden;
   transition: visibility 1s, opacity 1s linear;
   opacity: 0;
@@ -114,8 +123,12 @@ body {
 
 /* BOTTOM */
 .informacion {
+  position: relative;
   width: 100%;
   height: 66px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   /* padding: 11px 24px 7px 15px; */
 
   background-image: linear-gradient(
@@ -124,11 +137,37 @@ body {
     rgb(80, 155, 245)
   );
 }
-
+.informacion .info-titulo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  height: 100%;
+  padding: 0 24px;
+  right: 0;
+  left: 0;
+  animation: degradado-animado 20s ease-in-out infinite;
+  background: linear-gradient(270deg, rgb(18, 18, 18), rgb(206, 206, 206));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 400%;
+}
+@keyframes degradado-animado {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
 /* SIDEBAR */
 .sidebar {
-  min-width: 280px;
-  width: 280px;
+  min-width: 353px;
+  width: 353px;
   height: 100%;
 }
 
@@ -141,7 +180,7 @@ body {
   flex-direction: column;
 }
 .sidebar-top span {
-  font-size: 12px;
+  font-size: 1rem;
   padding: 4px 12px;
 }
 
@@ -167,11 +206,16 @@ body {
   border: none;
   display: flex;
   align-items: center;
+  line-height: normal;
   gap: 11px;
   color: #a7a7a7;
-  font-size: 12px;
+  font-size: 0.9rem;
   font-weight: 700;
+  color: white;
   flex: 1;
+}
+.boton-biblioteca svg {
+  fill: white;
 }
 .boton-agregar {
   border: none;
@@ -182,13 +226,18 @@ body {
   border-radius: 50%;
   height: 32px;
   width: 32px;
+  transition: all 0.2s;
+}
+.boton-agregar:hover {
+  box-shadow: 0 0 1px #d3d3d360;
 }
 
 /* MAIN */
 .main-box h2 {
   font-weight: 700;
   letter-spacing: normal;
-  font-size: 17px;
+  padding-top: 8px;
+  font-size: 1.3rem;
   height: 40px;
   color: white;
 }
@@ -258,25 +307,30 @@ body {
   background-color: white;
   font-weight: 700;
   font-stretch: 100%;
-  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
 }
 .botones-nav-der-neg {
-  width: 101px;
+  width: auto;
   text-align: left;
-  align-items: flex-start;
   padding-left: 8px;
   background-color: rgb(18, 18, 18);
   color: #a7a7a7;
   /* font-weight: normal; */
-  margin-right: 0;
+  margin: 0;
 }
 /* MAIN CONTENT */
 
 /* GRID */
 #yutu_player {
   padding: 1px;
+  justify-self: center;
   width: 100%;
   height: 100%;
+  position: absolute;
+  /* border-radius: 8px; */
 }
 
 .songs-grid {
@@ -314,23 +368,58 @@ body {
 .play-button:hover {
   cursor: pointer;
   transform: scale(1.1);
+  transition: all 1s;
 }
 .play-btn-disabled:hover {
   cursor: default;
   transform: scale(1);
+  transition: all 1s;
 }
 .play-btn-disabled {
   background-color: rgb(179, 179, 179);
   fill: white;
   cursor: default;
 }
-.cancion-card:hover div .play-button {
+#favorite-button {
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: 8px;
+  right: 8px;
+
+  transition: transform 0.2s;
+  background-color: transparent;
+}
+.favorite-button-false {
+  color: white;
+}
+.favorite-button-true {
+  color: rgb(211, 162, 39);
+}
+
+#favorite-button:hover {
+  cursor: pointer;
+  transform: scale(1.25);
+  transition: all 0.2s;
+}
+
+.cancion-card:hover div .play-button,
+.cancion-card:hover .favorite-button-false {
   visibility: visible;
   transition: visibility 0s, opacity 0.2s linear, bottom 0.2s;
   bottom: 24px;
   opacity: 1;
 }
-.cancion-card:not(:hover) div .play-button {
+.cancion-card:hover .favorite-button-false {
+  bottom: 8px;
+}
+.cancion-card:not(:hover) div .play-button,
+.cancion-card:not(:hover) .favorite-button-false {
   visibility: hidden;
   transition: visibility 1s, opacity 0.2s linear, bottom 0.2s;
   opacity: 0;
@@ -340,12 +429,97 @@ body {
   border-radius: 8px;
 }
 .titulo-cancion {
-  font-size: 12px;
+  font-size: 0.8rem;
   color: white;
   font-weight: 700;
 }
 .nombre-autor {
-  font-size: 10.5px;
+  font-size: 0.75rem;
   color: #a7a7a7;
   font-weight: 400;
+}
+
+/* FORMULARIO */
+
+#contenedor-formulario {
+  border-top: 1px solid #20202070;
+  border-bottom: 1px solid #20202070;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+
+  padding: 8px 16px;
+  margin-right: 8px;
+  height: calc(100svh - 280px);
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  /* scrollbar-gutter: both-sides; */
+}
+#contenedor-formulario::-webkit-scrollbar {
+  width: 6px;
+}
+#contenedor-formulario::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: #202020;
+}
+#contenedor-formulario input {
+  background-color: #202020;
+  color: white;
+
+  border: 1px solid transparent;
+}
+#contenedor-formulario input::placeholder {
+  color: #6d6d6d;
+}
+#contenedor-formulario input:focus {
+  color: white;
+  outline: none;
+  box-shadow: 0px 0px 3px #6d6d6d;
+  /* border: 1px solid #6d6d6d; */
+}
+
+#boton-limpiar {
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 16px;
+
+  border: none;
+  border-radius: 500px;
+  background-color: transparent;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#boton-limpiar-click {
+  border: none;
+  box-shadow: 0 0 2px lightgrey;
+  padding: 12px 24px;
+  border-radius: 8px;
+  color: white;
+  background-color: #101010;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+#boton-limpiar button:hover {
+  /* color: #202020; */
+  box-shadow: 0 0 4px lightgrey;
+  background-color: #202020;
+}
+/* CHECKBOX */
+input[type="checkbox"] {
+  display: none;
+}
+.label {
+  cursor: pointer;
+  display: inline-block;
+  padding: 3px;
+  /* background: url("unchecked.png") no-repeat left center; */
+  /* padding-left: 15px; */
+}
+input[type="checkbox"]:checked + .label {
+  color: rgb(211, 162, 39);
 }

@@ -1,4 +1,4 @@
-import { getDocs, collection, onSnapshot, addDoc, deleteDoc, doc, query, where } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js"
+import { getDocs, collection, onSnapshot, addDoc, deleteDoc, doc, query, where, orderBy, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js"
 import db from "./firestore.js";
 
 export const consultarDB = async (coleccion) => {
@@ -11,10 +11,11 @@ export const consultarDB = async (coleccion) => {
 }
 
 
-export const suscribirseABDD = async (callback, id) => {
-    id ? onSnapshot(collection(db, 'canciones', id), callback) : onSnapshot(collection(db, 'canciones'), callback)
+export const suscribirseABDD = async (callback, id, condicion) => {
+    const q = !id ? query(collection(db, "canciones"), orderBy("nombre")) : query(collection(db, "canciones"), where("id", "==", id));
+    onSnapshot(q, callback)
 }
-
+// query(collection(db, 'canciones'), orderBy("fecha_ingreso"))
 export const agregarCancion = async (cancion) => {
     try {
         await addDoc(collection(db, 'canciones'), cancion);
@@ -31,19 +32,23 @@ export const agregarCancion = async (cancion) => {
     }
 }
 
-export const editarCancion = async (cancion) => {
+export const editarCancion = async (id, llave, valor) => {
+    const cancion = doc(db, "canciones", id);
+    await updateDoc(cancion, {
+        [llave]: valor
+    });
 
 }
 
 export const eliminarCancion = async (id) => {
+    deleteDoc(doc(db, "canciones", docuenena.id));
+}
 
-    const docsRef = await collection(db, 'canciones');
-    const q = await query(docsRef, where("url", "==", id));
+export const editarFavorito = async (id, agregar = true) => {
 
-    const docu = await getDocs(q)
-    docu.forEach((docuenena) => {
-        deleteDoc(doc(db, "canciones", docuenena.id));
-        console.log(docuenena.id)
-    }
-    )
+    const cancion = doc(db, "canciones", id);
+
+    await updateDoc(cancion, {
+        favorito: agregar ? 1 : 0
+    });
 }

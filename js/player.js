@@ -8,20 +8,20 @@ const playSong = (url) => {
         currentSong = null
 
         // Player
-        document.getElementById("yutu_player").classList.remove('smoth-hidden-in')
-        document.getElementById("yutu_player").classList.add('smoth-hidden-out')
+        document.getElementById("yutu_player").classList.remove('smooth-hidden-in')
+        document.getElementById("yutu_player").classList.add('smooth-hidden-out')
 
         // Iconos
         document.querySelectorAll("#icono-play").forEach(icono => icono.classList.remove('d-none'))
         document.querySelectorAll("#icono-pause").forEach(icono => icono.classList.add('d-none'))
         return
     } else if (isPlaying) {
-        document.getElementById("yutu_player").classList.remove('smoth-hidden-in')
-        document.getElementById("yutu_player").classList.add('smoth-hidden-out')
+        document.getElementById("yutu_player").classList.remove('smooth-hidden-in')
+        document.getElementById("yutu_player").classList.add('smooth-hidden-out')
     }
     // Player
-    document.getElementById("yutu_player").classList.remove('smoth-hidden-out')
-    document.getElementById("yutu_player").classList.add('smoth-hidden-in')
+    document.getElementById("yutu_player").classList.remove('smooth-hidden-out')
+    document.getElementById("yutu_player").classList.add('smooth-hidden-in')
 
     const id = url.split("v=")[1]
     console.log(`Reproduciendo: ${url}`)
