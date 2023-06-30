@@ -28,7 +28,7 @@ export const agregarCancion = async (cancion) => {
             position: 'top-end',
             toast: true,
             showConfirmButton: false,
-            timer: 1500,
+            timer: 2200,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -48,7 +48,7 @@ export const agregarCancion = async (cancion) => {
             position: 'top-end',
             toast: true,
             showConfirmButton: false,
-            timer: 1500,
+            timer: 2200,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -64,7 +64,7 @@ export const agregarCancion = async (cancion) => {
             position: 'top-end',
             toast: true,
             showConfirmButton: false,
-            timer: 1500,
+            timer: 2200,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -84,7 +84,7 @@ export const editarCancion = async (cancionEditada, id) => {
             position: 'top-end',
             toast: true,
             showConfirmButton: false,
-            timer: 1500,
+            timer: 2200,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -115,7 +115,7 @@ export const editarCancion = async (cancionEditada, id) => {
             position: 'top-end',
             toast: true,
             showConfirmButton: false,
-            timer: 1500,
+            timer: 2200,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -130,7 +130,7 @@ export const editarCancion = async (cancionEditada, id) => {
             title: 'Error al editar',
             position: 'top-end',
             showConfirmButton: false,
-            timer: 1500,
+            timer: 2200,
             toast: true,
             timerProgressBar: true,
             didOpen: (toast) => {
@@ -155,7 +155,7 @@ export const eliminarCancion = async (id) => {
             position: 'top-end',
             toast: true,
             showConfirmButton: false,
-            timer: 1500,
+            timer: 2200,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -172,7 +172,7 @@ export const eliminarCancion = async (id) => {
             position: 'top-end',
             toast: true,
             showConfirmButton: false,
-            timer: 1500,
+            timer: 2200,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -200,7 +200,7 @@ export const eliminarCancion = async (id) => {
                     background: 'green',
                     title: 'Canción eliminada',
                     showConfirmButton: false,
-                    timer: 1500,
+                    timer: 2200,
                     toast: true,
                     timerProgressBar: true,
                     position: 'top-end',
@@ -219,7 +219,7 @@ export const eliminarCancion = async (id) => {
                     toast: true,
                     position: 'top-end',
                     showConfirmButton: false,
-                    timer: 1500,
+                    timer: 2200,
                     timerProgressBar: true,
                     didOpen: (toast) => {
                         toast.addEventListener('mouseenter', Swal.stopTimer)

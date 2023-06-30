@@ -79,6 +79,7 @@ window.addEventListener("DOMContentLoaded", async () => {
         formulario.reset();
         unsetVistaPrevia();
     })
+
 })
 
 // Asignar eventos
