@@ -1,6 +1,11 @@
 # Spookify
 https://jotazen.github.io/spookify/
 
+Pendiente:
+- [ ] Botón Avanzar
+- [ ] Botón Pausa en Perfil
+- [ ] Botón quitar YouTube
+- [ ] Búsqueda 
 ## Documentos
 
 ### canciones
@@ -17,6 +22,4 @@ cancion = {
     fecha_ingreso: string  ->  dd-mm-yyyyThh:mm:ss
     color: string  ->  rgb(0,0,0) o #000000
 }
-
-
 ```

@@ -1,7 +1,4 @@
-export const validarFormulario = (formulario) => {
 
-
-}
 export const aparecer = (elemento) => {
     elemento.classList.remove("smooth-hidden-out")
     elemento.classList.add("smooth-hidden-in")
@@ -19,9 +16,16 @@ export const setVistaPrevia = () => {
     const divPortada = document.getElementById("vista-previa-portada")
 
     if (url) {
-        const id = url.split("v=")[1].split("&")[0]
-        divVideo.src = `https://www.youtube.com/embed/${id}`
-        aparecer(divVideo)
+        try {
+            const id = url.split("v=")[1].split("&")[0]
+            divVideo.src = `https://www.youtube.com/embed/${id}`
+            aparecer(divVideo)
+        } catch {
+            desaparecer(divVideo)
+            setTimeout(() => {
+                divVideo.src = ""
+            }, 500);
+        }
     } else {
         desaparecer(divVideo)
         setTimeout(() => {
@@ -37,6 +41,7 @@ export const setVistaPrevia = () => {
 }
 
 export const unsetVistaPrevia = () => {
+    // Quitar vista previa
     const divVideo = document.getElementById("vista-previa-video")
     const divPortada = document.getElementById("vista-previa-portada")
     desaparecer(divVideo)
@@ -58,7 +63,8 @@ export const validarData = (data) => {
         resultado.errores.push("El autor es obligatorio")
         resultado.valid = false
     }
-    if (data.duracion && (parseInt(data.duracion) == NaN || parseInt(data.duracion) < 0)) {
+    console.log(parseInt(data.duracion))
+    if (data.duracion && (!parseInt(data.duracion) || parseInt(data.duracion) < 0)) {
         resultado.errores.push("La duración debe ser un número válido")
         resultado.valid = false
     }
@@ -70,3 +76,4 @@ export const validarData = (data) => {
     return resultado
 
 }
+

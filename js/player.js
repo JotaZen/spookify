@@ -2,6 +2,7 @@ let isPlaying = false
 let currentSong
 
 const playSong = (url) => {
+    // Pausa
     if (isPlaying && currentSong === url) {
         document.getElementById('yutu_player').src = 'https://www.youtube.com/embed'
         isPlaying = false
@@ -16,6 +17,7 @@ const playSong = (url) => {
         document.querySelectorAll("#icono-pause").forEach(icono => icono.classList.add('d-none'))
         return
     } else if (isPlaying) {
+
         document.getElementById("yutu_player").classList.remove('smooth-hidden-in')
         document.getElementById("yutu_player").classList.add('smooth-hidden-out')
     }
@@ -36,20 +38,6 @@ const playSong = (url) => {
     document.querySelector(`path[url="${url}"]`).nextElementSibling.classList.remove('d-none')
     isPlaying = true
     currentSong = url
-    // fetch(`https://www.youtube.com/embed/${id}`, {
-    //     method: 'GET',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Access-Control-Allow-Origin': '*',
-    //     }
-    // }).then(() => { }).catch((err) => {
-    //     playSong(url)
-    //     console.log(err)
-    //     Swal.fire({
-    //         icon: 'error',
-    //         title: 'Oops...',
-    //         text: 'No se pudo reproducir la canción (No existe o está protegida por derechos de autor)',
-    //     })
-    // })
+
 
 }

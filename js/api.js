@@ -5,19 +5,14 @@ import { validarData } from "./formulario.js";
 
 export const consultarDB = async (coleccion) => {
     const querySnapshot = await getDocs(collection(db, coleccion));
-    // const datos = querySnapshot.docs.map((doc) => ({
-    //     id: doc.id,
-    //     ...doc.data(),
-    // }));
     return querySnapshot;
 }
-
 
 export const suscribirseABDD = async (callback, id, condicion) => {
     const q = !id ? query(collection(db, "canciones"), orderBy("nombre")) : query(collection(db, "canciones"), where("id", "==", id));
     onSnapshot(q, callback)
 }
-// query(collection(db, 'canciones'), orderBy("fecha_ingreso"))
+
 export const agregarCancion = async (cancion) => {
     console.log(cancion)
     const resultado = validarData(cancion)
@@ -31,7 +26,7 @@ export const agregarCancion = async (cancion) => {
             position: 'top-end',
             toast: true,
             showConfirmButton: false,
-            timer: 2200,
+            timer: 3000,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -41,15 +36,15 @@ export const agregarCancion = async (cancion) => {
         return;
     }
     const cancionFormateada = {
-        nombre: cancion.nombre || null,
-        autor: cancion.autor || null,
-        album: cancion.album || null,
+        nombre: cancion.nombre ? cancion.nombre.trim() : null,
+        autor: cancion.autor ? cancion.autor.trim() : null,
+        album: cancion.album ? cancion.album.trim() : null,
         duracion: parseInt(cancion.duracion || 0) || null,
         fecha: (cancion.fecha == "Sin fecha" || !cancion.fecha) ? null : cancion.fecha,
         fecha_ingreso: new Date().toISOString(),
-        portada: cancion.portada || null,
+        portada: cancion.portada ? cancion.portada.trim() : null,
         color: cancion.color == "#000000" ? null : cancion.color,
-        url: cancion.url || null,
+        url: cancion.url ? cancion.url.trim() : null,
     }
 
     try {
@@ -63,7 +58,7 @@ export const agregarCancion = async (cancion) => {
             position: 'top-end',
             toast: true,
             showConfirmButton: false,
-            timer: 2200,
+            timer: 3000,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -79,7 +74,7 @@ export const agregarCancion = async (cancion) => {
             position: 'top-end',
             toast: true,
             showConfirmButton: false,
-            timer: 2200,
+            timer: 3000,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -102,7 +97,7 @@ export const editarCancion = async (cancionEditada, id) => {
             position: 'top-end',
             toast: true,
             showConfirmButton: false,
-            timer: 2200,
+            timer: 3000,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -113,17 +108,17 @@ export const editarCancion = async (cancionEditada, id) => {
     }
 
     const cancionFormateada = {
-        nombre: cancionEditada.nombre.trim() || null,
-        autor: cancionEditada.autor.trim() || null,
-        album: cancionEditada.album || null,
+        nombre: cancionEditada.nombre ? cancionEditada.nombre.trim() : null,
+        autor: cancionEditada.autor ? cancionEditada.autor.trim() : null,
+        album: cancionEditada.album ? cancionEditada.album.trim() : null,
         duracion: parseInt(cancionEditada.duracion || 0) || null,
         fecha: cancionEditada.fecha == "Sin fecha" ? null : cancionEditada.fecha,
         // fecha_ingreso: cancionEditada.fecha_ingreso || new Date().toISOString(),
-        portada: cancionEditada.portada || null,
+        portada: cancionEditada.portada ? cancionEditada.portada.trim() : null,
         color: cancionEditada.color == "#000000" ? null : cancionEditada.color,
-        url: cancionEditada.url || null,
+        url: cancionEditada.url ? cancionEditada.url.trim() : null,
     }
-    if (!cancionFormateada.fecha_ingreso) {
+    if (!cancionEditada.fecha_ingreso) {
         Object.assign(cancionFormateada, { fecha_ingreso: new Date().toISOString() })
     }
 
@@ -138,7 +133,7 @@ export const editarCancion = async (cancionEditada, id) => {
             position: 'top-end',
             toast: true,
             showConfirmButton: false,
-            timer: 2200,
+            timer: 3000,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -154,7 +149,7 @@ export const editarCancion = async (cancionEditada, id) => {
             text: resultado.errores.join("\n"),
             position: 'top-end',
             showConfirmButton: false,
-            timer: 2200,
+            timer: 3000,
             toast: true,
             timerProgressBar: true,
             didOpen: (toast) => {
@@ -179,7 +174,7 @@ export const eliminarCancion = async (id) => {
             position: 'top-end',
             toast: true,
             showConfirmButton: false,
-            timer: 2200,
+            timer: 3000,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -196,7 +191,7 @@ export const eliminarCancion = async (id) => {
             position: 'top-end',
             toast: true,
             showConfirmButton: false,
-            timer: 2200,
+            timer: 3000,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -224,7 +219,7 @@ export const eliminarCancion = async (id) => {
                     background: 'green',
                     title: 'Canción eliminada',
                     showConfirmButton: false,
-                    timer: 2200,
+                    timer: 3000,
                     toast: true,
                     timerProgressBar: true,
                     position: 'top-end',
@@ -243,7 +238,7 @@ export const eliminarCancion = async (id) => {
                     toast: true,
                     position: 'top-end',
                     showConfirmButton: false,
-                    timer: 2200,
+                    timer: 3000,
                     timerProgressBar: true,
                     didOpen: (toast) => {
                         toast.addEventListener('mouseenter', Swal.stopTimer)

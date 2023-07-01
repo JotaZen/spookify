@@ -15,7 +15,7 @@ export const tarjeta = (cancion, id) => {
         <div class="card-body">
             <p class="card-title titulo-cancion">${cancion.nombre || "Sin Título"}</p>
             <p class="card-text nombre-autor">
-            ${cancion.autor || "Anónimo"}
+                ${cancion.autor || "Anónimo"}
             </p>
             </div>
         <button id="favorite-button" data-id="${id}" class="${cancion.favorito ? "favorite-button-true" : "favorite-button-false"}">

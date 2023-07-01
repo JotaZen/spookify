@@ -65,6 +65,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     // mostrarCancion("fuK5DeSW8pU3pIUmaMsy");
 
+    // OnSubmit del formulario
     const formulario = document.getElementById("formulario-canciones");
     formulario.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -81,6 +82,7 @@ window.addEventListener("DOMContentLoaded", async () => {
         botonAgregar.disabled = false;
 
     })
+
     document.querySelectorAll(".vista-previa-setter").forEach((input) => {
         input.addEventListener("blur", async (e) => {
             setVistaPrevia()
@@ -91,11 +93,11 @@ window.addEventListener("DOMContentLoaded", async () => {
         unsetVistaPrevia();
     })
 
+
     // Ordenar canciones
     const selectOrdenar = document.getElementById("select-ordenar");
     selectOrdenar.addEventListener("change", async (e) => {
         e.preventDefault();
-        console.log(e.target.value)
         switch (e.target.value) {
             case "1":
                 sortFunction = (a, b) => a.nombre.toLowerCase().localeCompare(b.nombre.toLowerCase());
@@ -113,7 +115,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     })
 
 })
-// Asignar eventos
+// Asignar eventos de reseteo de estado
 document.getElementById("boton-flecha-volver").addEventListener("click", () => {
     volverAInicio();
 })
