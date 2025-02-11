@@ -8,13 +8,15 @@ const url = new URLSearchParams(window.location.search);
 const apiKey = await url.get('key');
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBHgX4GNvN9rOcMnM6HqmsRQX5AInd2YmU", // Te la regalo usala, pero literal puedes sacar una gratis por que querrias esta xd 
+    apiKey: "AIzaSyDCQ-HP5ltwwJJP1pfE8TYZjfOfToWKWZo", // Te la regalo usala, pero literal puedes sacar una gratis por que querrias esta xd
     authDomain: "biblitecamusical.firebaseapp.com",
     projectId: "biblitecamusical",
-    storageBucket: "biblitecamusical.firebasestorage.app",    
+    storageBucket: "biblitecamusical.firebasestorage.app",
     messagingSenderId: "476549013944",
-    appId: "1:476549013944:web:6aff6572085db0f9f22f4d"
+    appId: "1:476549013944:web:fb6290c963e45f41f22f4d"
 };
+
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
